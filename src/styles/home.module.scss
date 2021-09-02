@@ -103,27 +103,35 @@
                     display: flex;
                     width: 100%;
                     justify-content: center;
-                    margin-top: 1rem;
+                    margin-top: 2rem;
 
                     button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
                         padding: 0.75rem 0.5rem;
-                        width: 120px;
+                        width: 150px;
                         border-radius: 6px;
                         outline: none;
+                        border: none;
                         transition: all 0.3s;
-                    }:first-child {
-                        margin-right: 1rem;
                         background-color: var(--blue-500);
-                        border: none;
                         color: var(--white);
-                    }
-                    :nth-child(2) {
+                    }:last-child:not(a) {
                         background-color: var(--gray-100);
-                        border: none;
-                    }:hover {
-                        color: var(--white);
-                        background-color: var(--blue-800);
+                        margin-left: 1.5rem;
                     }
+                }
+
+                #loading {
+                    background-color: transparent;
+                    transition: all 2s;
+                    -webkit-animation: spin 1s infinite linear;
+                }
+                
+                @-webkit-keyframes spin {
+                    0%   {-webkit-transform: rotate(0deg)}
+                    100% {-webkit-transform: rotate(360deg)}
                 }
             }
         }

@@ -1,4 +1,5 @@
-import firebase, { initializeApp } from 'firebase/app';
+import * as firebase from 'firebase/app';
+import "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBZY_rHYxX48LkvkytGks60HXf6XyHIYRQ",
@@ -8,10 +9,6 @@ const firebaseConfig = {
     messagingSenderId: "294986278714",
     appId: "1:294986278714:web:3bcbc394f9f051653c1203",
     measurementId: "G-KY2SRKBZJ4"
-  };
-  
-  // Initialize Firebase
+};
 
-export default firebase.getApps().length ?
-firebase.getApps()[0] :
-firebase.initializeApp(firebaseConfig);
+export default firebase.initializeApp(firebaseConfig);
