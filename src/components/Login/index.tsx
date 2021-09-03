@@ -1,31 +1,32 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import type { NextPage } from 'next'
-import { Header } from '../components/Header';
+import { Header } from '../Header/index';
 import { VscLoading } from 'react-icons/vsc';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import app, { auth } from '../config/firebase/index';
-import LinkStyled from '../components/Link';
+import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
+import app, { auth } from '../../config/firebase/index';
 
-import styles from '../styles/home.module.scss';
-import { useState } from 'react';
+import styles from '../../styles/home.module.scss';
+import { useEffect, useState } from 'react';
+
+import LinkStyled from '../Link/index';
 
 const validationSchema = yup.object().shape({
     email: yup.string().email('E-mail inválido').required("Preenchimento obrigatório"),
     password: yup.string().required("Preenchimento obrigatório"),
-    workerId: yup.string().required("Preenchimento obrigatório"),
 })
 
-const Signup: NextPage = () => {
+export const Login = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
     const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik({
         onSubmit: async (values, form) => {
             setIsLoading(true);
+            setPersistence(auth, browserLocalPersistence)
             try {
-                const user = await createUserWithEmailAndPassword(auth, values.email, values.password);
+                const user = await signInWithEmailAndPassword(auth, values.email, values.password);
                 console.log(user)
+                console.log(auth.currentUser)
             } catch (err) {
                 console.log("ERRO:", err.split('.')[0]);
             }
@@ -35,9 +36,12 @@ const Signup: NextPage = () => {
         initialValues: {
             email: '',
             password: '',
-            workerId: '',
         }
     })
+
+    useEffect(() => {
+        console.log("Sessão ativa: ", auth.currentUser)
+    }, [])
 
     return (
         <div className={styles.homeContainer}>
@@ -56,18 +60,13 @@ const Signup: NextPage = () => {
                             <input type="password" id="password" value={values.password} onChange={handleChange} onBlur={handleBlur} required />
                             {touched.password && <span>{errors.password}</span>}
                         </div>
-                        <div className={styles.workerId}>
-                            <label htmlFor="workerId">clocker.work/</label>
-                            <input type="text" id="workerId" value={values.workerId} onChange={handleChange} onBlur={handleBlur} required />
-                            {touched.workerId && <span>{errors.workerId}</span>}
-                        </div>
                         <div className={styles.buttons}>
-                            <button onClick={() => handleSubmit} className={styles.submitButton} >
+                            <button onClick={() => handleSubmit} className={styles.primaryButton} >
                                 {isLoading ? <VscLoading id={styles.loading} /> : ''}
-                                Cadastrar-se
+                                Entrar
                             </button>
-                            <button>
-                                <LinkStyled href="/" name="Entrar" />
+                            <button className={styles.secondaryButton}>
+                                <LinkStyled href="/signup" name="Cadastre-se" />
                             </button>
                         </div>
                     </form>
@@ -77,4 +76,4 @@ const Signup: NextPage = () => {
     )
 }
 
-export default Signup;
+export default Login;
