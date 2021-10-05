@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { Header } from '../Header/index';
 import { VscLoading } from 'react-icons/vsc';
 import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
-import app, { auth } from '../../config/firebase/index';
+import { auth } from '../../config/firebase/client';
 
 import styles from '../../styles/home.module.scss';
 import { useEffect, useState } from 'react';
