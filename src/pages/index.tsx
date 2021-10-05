@@ -1,5 +1,5 @@
 import Login from "@/components/Login";
-import { auth } from "@/config/firebase";
+import { auth } from "@/config/firebase/client";
 import { useEffect, useState } from "react";
 import Agenda  from '../components/Agenda/index' 
 

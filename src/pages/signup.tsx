@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { Header } from '../components/Header';
 import { VscLoading } from 'react-icons/vsc';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import app, { auth } from '../config/firebase/index';
+import app, { auth } from '../config/firebase/client';
 import LinkStyled from '../components/Link';
 
 import styles from '../styles/home.module.scss';
